@@ -58,3 +58,44 @@ export const checkPasswordValidFromUserSettings = (
 
   return true;
 };
+
+// ---------------------------------------
+
+export const generatePassword = (
+  nbCharacters,
+  includeSpecialCharacters,
+  includeNumbers,
+  includeUpperCase
+) => {
+  let characters = "abcdefghijklmnopqrstuvwxyz";
+  if (includeSpecialCharacters) {
+    characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+  }
+  if (includeNumbers) {
+    characters += "0123456789";
+  }
+  if (includeUpperCase) {
+    characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  }
+
+  let password = "";
+  let validityPassword = false;
+  // for (let i = 0; i < nbCharacters; i++) {
+  //   password += characters.charAt(
+  //     Math.floor(Math.random() * characters.length)
+  //   );
+  // }
+
+  do {
+    password = generateString(nbCharacters, characters);
+    // Verification du mot de passe
+    validityPassword = checkPasswordValidFromUserSettings(
+      password,
+      includeSpecialCharacters,
+      includeNumbers,
+      includeUpperCase
+    );
+  } while (!validityPassword);
+
+  return password;
+};

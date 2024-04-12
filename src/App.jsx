@@ -6,8 +6,8 @@ import PasswordGenerator from "./components/PasswordGenerator";
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
-      <HelloWorld />
+      {/* <h1>Vite + React</h1>
+      <HelloWorld /> */}
       <PasswordGenerator />
     </>
   );

@@ -1,93 +1,61 @@
 import { useState } from "react";
-import {
-  generateString,
-  checkPasswordValidFromUserSettings,
-} from "../utils/passwordUtils";
-
-import TextInput from "./TextInput";
+import NumberDropdown from "./NumberDropdown";
+import Checkbox from "./Checkbox";
+import { generatePassword } from "../utils/passwordUtils";
 
 const PasswordGenerator = () => {
+  const [passwordOptions, setPasswordOptions] = useState({
+    nbCharacters: 8,
+    specialCharacters: false,
+    numbers: false,
+    upperCase: false,
+  });
   const [generatedPassword, setGeneratedPassword] = useState(null);
-  const [nbCharacters, setNbCharacters] = useState("");
-  const [specialCharacters, setSpecialCharacters] = useState(false);
-  const [numbers, setNumbers] = useState(false);
-  const [upperCase, setUpperCase] = useState(false);
+
+  const handleOptionChange = (option, value) => {
+    setPasswordOptions({ ...passwordOptions, [option]: value });
+  };
 
   const handleGeneratePassword = () => {
-    // Generer le mot de passe en fonction des parametres
-    let charactersAuthorized = "abcdefghijklmnopqrstuvwxyz";
-
-    if (specialCharacters) {
-      charactersAuthorized += "@_/+";
-    }
-
-    if (numbers) {
-      charactersAuthorized += "0123456789";
-    }
-
-    if (upperCase) {
-      charactersAuthorized += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    }
-
-    let generatedPassword = "";
-    let validityPassword = false;
-
-    do {
-      generatedPassword = generateString(nbCharacters, charactersAuthorized);
-      // Verification du mot de passe
-      validityPassword = checkPasswordValidFromUserSettings(
-        generatedPassword,
-        specialCharacters,
-        numbers,
-        upperCase
-      );
-    } while (!validityPassword);
-
+    const { nbCharacters, specialCharacters, numbers, upperCase } =
+      passwordOptions;
+    const generatedPassword = generatePassword(
+      nbCharacters,
+      specialCharacters,
+      numbers,
+      upperCase
+    );
     setGeneratedPassword(generatedPassword);
   };
 
   return (
     <div>
-      <h1>Generateur de mot de passe</h1>
-      <TextInput
-        label="Nombre de caracteres"
-        value={nbCharacters}
-        onChange={(e) => setNbCharacters(parseInt(e.target.value))}
+      <h1>Générateur de mot de passe</h1>
+      <NumberDropdown
+        value={passwordOptions.nbCharacters}
+        onChange={(e) =>
+          handleOptionChange("nbCharacters", parseInt(e.target.value))
+        }
       />
-      <div>
-        <label>
-          Caracteres speciaux ?
-          <input
-            type="checkbox"
-            checked={specialCharacters}
-            onChange={() => setSpecialCharacters(!specialCharacters)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Chiffres ?
-          <input
-            type="checkbox"
-            checked={numbers}
-            onChange={() => setNumbers(!numbers)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Majuscules ?
-          <input
-            type="checkbox"
-            checked={upperCase}
-            onChange={() => setUpperCase(!upperCase)}
-          />
-        </label>
-      </div>
-      <button onClick={handleGeneratePassword}>Generer</button>
+      <Checkbox
+        label="Caractères spéciaux"
+        checked={passwordOptions.specialCharacters}
+        onChange={(value) => handleOptionChange("specialCharacters", value)}
+      />
+      <Checkbox
+        label="Chiffres"
+        checked={passwordOptions.numbers}
+        onChange={(value) => handleOptionChange("numbers", value)}
+      />
+      <Checkbox
+        label="Majuscules"
+        checked={passwordOptions.upperCase}
+        onChange={(value) => handleOptionChange("upperCase", value)}
+      />
+      <button onClick={handleGeneratePassword}>Générer</button>
       {generatedPassword && (
         <div>
-          <h2>Mot de passe genere :</h2>
+          <h2>Mot de passe généré :</h2>
           <p>{generatedPassword}</p>
         </div>
       )}
