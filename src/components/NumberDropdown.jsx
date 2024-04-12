@@ -1,5 +1,3 @@
-// NumberDropdown.js
-
 const NumberDropdown = ({ value, onChange }) => {
   const numbers = [];
   for (let i = 8; i <= 36; i++) {

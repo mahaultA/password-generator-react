@@ -67,15 +67,15 @@ export const generatePassword = (
   includeNumbers,
   includeUpperCase
 ) => {
-  let characters = "abcdefghijklmnopqrstuvwxyz";
+  let characters = charactersLowCase;
   if (includeSpecialCharacters) {
-    characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+    characters += charactersSpecials;
   }
   if (includeNumbers) {
-    characters += "0123456789";
+    characters += charactersNumbers;
   }
   if (includeUpperCase) {
-    characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    characters += charactersUpCase;
   }
 
   let password = "";

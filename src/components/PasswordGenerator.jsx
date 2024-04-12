@@ -52,6 +52,7 @@ const PasswordGenerator = () => {
         checked={passwordOptions.upperCase}
         onChange={(value) => handleOptionChange("upperCase", value)}
       />
+      <br></br>
       <button onClick={handleGeneratePassword}>Générer</button>
       {generatedPassword && (
         <div>
