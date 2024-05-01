@@ -30,7 +30,9 @@ const PasswordGenerator = () => {
 
   return (
     <div>
-      <h1>Générateur de mot de passe</h1>
+      <h1 className="mx-auto py-6 font-bold text-2xl">
+        Générateur de mot de passe
+      </h1>
       <NumberDropdown
         value={passwordOptions.nbCharacters}
         onChange={(e) =>
@@ -52,7 +54,13 @@ const PasswordGenerator = () => {
         checked={passwordOptions.upperCase}
         onChange={(value) => handleOptionChange("upperCase", value)}
       />
-      <button onClick={handleGeneratePassword}>Générer</button>
+
+      <button
+        className="flex mx-auto my-6 bg-blue-500 text-white font-bold py-2 px-4 rounded"
+        onClick={handleGeneratePassword}
+      >
+        Générer
+      </button>
       {generatedPassword && (
         <div>
           <h2>Mot de passe généré :</h2>

@@ -6,7 +6,6 @@ const NumberDropdown = ({ value, onChange }) => {
 
   return (
     <div>
-      <label htmlFor="number">Nombre de caractères : </label>
       <select id="number" value={value} onChange={onChange}>
         {numbers.map((number) => (
           <option key={number} value={number}>
@@ -14,6 +13,7 @@ const NumberDropdown = ({ value, onChange }) => {
           </option>
         ))}
       </select>
+      <label htmlFor="number">Nombre de caractères</label>
     </div>
   );
 };
